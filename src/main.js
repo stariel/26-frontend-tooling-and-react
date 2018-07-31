@@ -3,10 +3,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { say, CAT, FISH, FROG, GHOST, RABBIT } from 'cowsay';
+import {CAT, FISH, FROG, GHOST, RABBIT, say} from 'cowsay';
 import faker from 'faker';
 
 import './style/app.scss';
+
+let animals = ['', CAT, FISH, FROG, GHOST, RABBIT];
 
 class App extends React.Component {
     constructor(props) {
@@ -14,7 +16,7 @@ class App extends React.Component {
 
         this.state = {
             content: null,
-            cow: '',
+            animal: '',
         };
 
         this.cowTalk = this.cowTalk.bind(this);
@@ -28,14 +30,20 @@ class App extends React.Component {
     }
 
     handleChange(event) {
-        this.setState({cow: event.target.value});
+        if (event.target.value === '1') {
+            this.setState({animal: CAT});
+        }
+
+        if (event.target.value === '2') {
+            this.setState({animal: FISH});
+        }
       }
 
     cowTalk() {
         let content = faker.fake("{{lorem.sentence}}");
         ReactDOM.render(say({
              text: content,
-             cow: this.state.cow.toUpperCase(), 
+             cow: this.state.animal, 
             }), document.getElementById('cow'));
     }
 
@@ -48,13 +56,13 @@ class App extends React.Component {
                 <pre id="cow"></pre>
                 <form id="animal">
                 <label> Choose your animal:
-                <select value={this.state.cow} onChange={this.handleChange}>
-                <option value="">cow</option>
-                <option value="cat">cat</option>
-                <option value="fish">fish</option>
-                <option value="frog">frog</option>
-                <option value="ghost">ghost</option>
-                <option value="rabbit">rabbit</option>
+                <select onChange={this.handleChange}>
+                <option value="0">cow</option>
+                <option value="1">cat</option>
+                <option value="2">fish</option>
+                <option value="3">frog</option>
+                <option value="4">ghost</option>
+                <option value="5">rabbit</option>
                 </select>
                 </label>
                 </form>
